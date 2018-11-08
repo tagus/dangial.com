@@ -1,0 +1,13 @@
+{
+  "name": "dangial.com",
+  "version": "1.0.0",
+  "description": "so many dangs",
+  "main": "index.js",
+  "author": "Sugat Poudel",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "react": "^16.6.1",
+    "react-dom": "^16.6.1"
+  }
+}
