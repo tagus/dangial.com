@@ -4,6 +4,7 @@ html, body {
 }
 
 .dang-container {
+  overflow: hidden;
   height: 100vh;
   background: url("../images//dang_supper.png") no-repeat center;
 }
