@@ -5,6 +5,7 @@ html, body {
 
 .dang-container {
   height: 100vh;
+  background: url("../images//dang_supper.png") no-repeat center;
 }
 
 .dang-text-1 {
