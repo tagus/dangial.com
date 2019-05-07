@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   entry: {
-    wheel: path.resolve(__dirname, 'build', 'javascript', '.js'),
+    main: path.resolve(__dirname, 'src', 'main.js'),
   },
   output: {
     path: path.resolve(__dirname, 'docs', 'javascript'),
@@ -18,8 +18,5 @@ module.exports = {
         }
       }
     ]
-  },
-  resolve: {
-    extensions: ['.js', '.jsx'],
-  },
+  }
 };
