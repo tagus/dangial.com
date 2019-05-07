@@ -1,1 +1,1 @@
-(dangial.com)[https://dangial.com]
+[dangial.com](https://dangial.com)
