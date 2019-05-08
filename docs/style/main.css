@@ -21,18 +21,35 @@ html, body {
 }
 
 .spins-sidebar {
-  flex: 1.25;
+  flex: 1.5;
   border-right: 2px solid #95a5a6;
   padding: 1em 2.5em;
 }
 
 .spins-wheel {
   flex: 4;
+  padding: 1em 2.5em;
+}
+
+/* wheel */
+.wheel-title {
+  text-align: center;
+  margin: 1.5em 0 1em 0;
+}
+
+.roulette-wheel {
+  height: 500px;
+  margin: 0 auto;
+  display: block;
+  transform: rotate(-90deg);
+}
+
+.roulette-wheel-circle {
+  fill: #ff7675;
+  /* stroke: black; */
 }
 
 /* history sidebar */
-
-/* wheel */
 .wheels-list {
   list-style-type: none;
   border: 1px solid black;
