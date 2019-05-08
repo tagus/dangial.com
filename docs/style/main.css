@@ -1,4 +1,58 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
+
 html, body {
-    height: 100%;
-    margin: 0;
+  height: 100%;
+  margin: 0;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+.spins-container {
+  position: fixed;
+  display: flex;
+  padding: 0;
+  margin: 0;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+  background-color: #ecf0f1;
+}
+
+.spins-sidebar {
+  flex: 1.25;
+  border-right: 2px solid #95a5a6;
+  padding: 1em 2.5em;
+}
+
+.spins-wheel {
+  flex: 4;
+}
+
+/* history sidebar */
+
+/* wheel */
+.wheels-list {
+  list-style-type: none;
+  border: 1px solid black;
+  padding: 0;
+}
+
+.wheels-list-item {
+  border-bottom: 1px solid black;
+  padding: 1em;
+}
+
+.wheels-list-item:last-child {
+  border-bottom: none;
+}
+
+.wheels-list-item:hover {
+  cursor: pointer;
+  background: white;
+}
+
+.wheels-list-item.is-selected {
+  background: white;
 }
