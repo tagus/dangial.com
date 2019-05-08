@@ -1,4 +1,5 @@
 import { v4 } from 'uuid';
+import shuffle from 'lodash/shuffle';
 
 /**
  * A static list of possible color for each wheel slot.
@@ -29,12 +30,16 @@ export class Wheel {
   constructor(name, slots = [], history = {}) {
     this.id = v4();
     this.name = name;
-    this.slots = slots;
+    this.slots = this.mapToColors(slots);
     this.history = history;
   }
 
   mapToColors(slots) {
-    // TODO:
+    const shuffled = shuffle(colors);
+    return slots.map((s, i) => {
+      const color = shuffled[i % shuffled.length];
+      return [ s, color ];
+    });
     return slots;
   }
 }
