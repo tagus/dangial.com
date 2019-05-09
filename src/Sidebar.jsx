@@ -41,7 +41,7 @@ export default class Sidebar extends React.Component {
     const { wheels } = this.props;
     return (
       <div>
-        <h2>dangial.com</h2>
+        <h1>dangial.com</h1>
         {wheels.length > 0 ? this.renderWheels() : this.renderEmpty()}
       </div>
     );

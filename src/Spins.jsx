@@ -3,10 +3,8 @@ import Sidebar from './Sidebar.jsx';
 import { Wheel } from './models.js';
 import RouletteWheel from './Wheel.jsx';
 
-const fakeWheel1 = new Wheel('soft', [ 'sugat', 'dangial', 'tom', 'joe' ]);
-const fakeWheel2 = new Wheel('hard', [ 'dingus', 'tangus', 'rangus' ]);
-const fakeWheel3 = new Wheel('thicc', [ 'dingus', 'tangus', 'rangus' ]);
-const fakeWheel4 = new Wheel('dope', [ 'dingus', 'tangus', 'rangus' ]);
+const fakeWheel1 = new Wheel('soft bool', [ 'sugat', 'dangial', 'tom', 'joe', 'bob', 'ram', 'john', 'bolin', 'rollin' ]);
+const fakeWheel2 = new Wheel('hard bool', [ 'dingus', 'tangus', 'rangus' ]);
 
 /**
  * Main container for for the spins application.
@@ -15,7 +13,7 @@ export default class Spins extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      wheels: [ fakeWheel1, fakeWheel2, fakeWheel3, fakeWheel4 ],
+      wheels: [ fakeWheel1, fakeWheel2 ],
       selected: 1,
     }
     this.handleWheelSelect = this.handleWheelSelect.bind(this);
