@@ -1,10 +1,7 @@
 import React from 'react';
 import Sidebar from './Sidebar.jsx';
-import { Wheel } from './models.js';
+import { Wheel, wheelFixtures } from './models.js';
 import RouletteWheel from './Wheel.jsx';
-
-const fakeWheel1 = new Wheel('soft bool', [ 'sugat', 'dangial', 'tom', 'joe', 'bob', 'ram', 'john', 'bolin', 'rollin' ]);
-const fakeWheel2 = new Wheel('hard bool', [ 'dingus', 'tangus', 'rangus' ]);
 
 /**
  * Main container for for the spins application.
@@ -13,10 +10,11 @@ export default class Spins extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      wheels: [ fakeWheel1, fakeWheel2 ],
+      wheels: wheelFixtures,
       selected: 1,
     }
     this.handleWheelSelect = this.handleWheelSelect.bind(this);
+    this.handleWheelDelete = this.handleWheelDelete.bind(this);
   }
 
   checkLocalStorage() {
@@ -30,6 +28,24 @@ export default class Spins extends React.Component {
    */
   handleWheelSelect(index) {
     this.setState({ selected: index })
+  }
+
+  /**
+   * Handles wheel deletion by removing the wheel
+   * at the given index.
+   *
+   * @param {Number} index The wheel index to delete.
+   */
+  handleWheelDelete(index) {
+    this.setState(prev => {
+      const _selected = prev.selected === index ? -1 : prev.selected;
+      const _wheels = prev.wheels.slice();
+      _wheels.splice(index, 1);
+      return {
+        wheels: _wheels,
+        selected: _selected,
+      };
+    });
   }
 
   renderWheel() {
@@ -54,11 +70,12 @@ export default class Spins extends React.Component {
           <Sidebar
             wheels={wheels}
             onWheelSelect={this.handleWheelSelect}
+            onWheelDelete={this.handleWheelDelete}
             selected={selected}
           />
         </div>
         <div className="spins-wheel">
-          {this.renderWheel()}
+          {/* {this.renderWheel()} */}
         </div>
       </div>
     );

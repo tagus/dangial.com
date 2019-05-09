@@ -29,19 +29,43 @@ const colors = [
  * was spun.
  */
 export class Wheel {
-  constructor(name, slots = [], history = {}) {
+  constructor(name, labels = [], history = []) {
     this.id = v4();
     this.name = name;
-    this.slots = this.mapToColors(slots);
+    this.labels = this.mapToColors(labels);
     this.history = history;
   }
 
-  mapToColors(slots) {
+  mapToColors(labels) {
     const shuffled = shuffle(colors);
-    return slots.map((s, i) => {
+    return labels.map((s, i) => {
       const color = shuffled[i % shuffled.length];
       return [ s, color ];
     });
-    return slots;
+    return labels;
+  }
+
+  /**
+   * Stores the given label to the wheel's history.
+   *
+   * @param {String} label The label to add to the history
+   */
+  addHistory(label) {
+    this.history.push({
+      timestamp: Date.now(),
+      label: label,
+    })
   }
 }
+
+/**
+ * Fake testing data
+ */
+export const wheelFixtures = [
+  new Wheel(
+    'soft bool',
+    [ 'sugat', 'dangial', 'tom', 'joe', 'bob', 'ram', 'john', 'bolin', 'rollin' ]),
+  new Wheel(
+    'hard bool',
+    [ 'dingus', 'tangus', 'rangus' ]),
+];

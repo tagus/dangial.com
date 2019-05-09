@@ -69,6 +69,14 @@ html, body {
   padding: 1.3em 1em;
   transition: 0.25s background-color;
   font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.wheels-list-item-delete {
+  color: #e74c3c;
+  margin-top: 3px;
 }
 
 .wheels-list-item:hover {

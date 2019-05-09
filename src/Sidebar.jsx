@@ -9,13 +9,14 @@ import { Wheel } from './models';
  */
 export default class Sidebar extends React.Component {
   renderWheels() {
-    const { wheels, selected, onWheelSelect } = this.props;
+    const { wheels, selected, onWheelSelect, onWheelDelete } = this.props;
     return (
       <ul className="wheels-list">
         {wheels.map((w, i) => {
+          const isSelected = selected === i;
           const className = classnames({
             'wheels-list-item': true,
-            'is-selected': selected === i,
+            'is-selected': isSelected,
           });
           return (
             <li
@@ -23,7 +24,12 @@ export default class Sidebar extends React.Component {
               className={className}
               onClick={() => onWheelSelect(i)}
             >
-              {w.name}
+              <span>{w.name}</span>
+              {isSelected &&
+                <i
+                  className="far fa-times-circle wheels-list-item-delete"
+                  onClick={() => onWheelDelete(i)}
+                />}
             </li>
           );
         })}
@@ -52,10 +58,12 @@ Sidebar.propTypes = {
   wheels: PropTypes.arrayOf(PropTypes.instanceOf(Wheel)),
   selected: PropTypes.number,
   onWheelSelect: PropTypes.func,
+  onWheelDelete: PropTypes.func,
 };
 
 Sidebar.defaultProps = {
   wheels: [],
   selected: -1,
   onWheelSelect: () => {},
+  onWheelDelete: () => {},
 };

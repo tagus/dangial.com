@@ -21,12 +21,12 @@ function getCoordinates(percent, radius = 1) {
 export default class RouletteWheel extends React.Component {
   renderWheel() {
     const { wheel } = this.props;
-    const portion = 1 / wheel.slots.length;
+    const portion = 1 / wheel.labels.length;
     // if the slice is more than 50%, take the large arc (the long way around)
     const arc = portion > .5 ? 1 : 0;
     return (
       <svg className="roulette-wheel" viewBox="-1 -1 2 2">
-        {wheel.slots.map(([ label, color ], i) => {
+        {wheel.labels.map(([ label, color ], i) => {
           const [ x0, y0 ] = getCoordinates(portion * i);
           const [ x1, y1 ] = getCoordinates(portion * (i + 1));
           return (
