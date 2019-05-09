@@ -45,11 +45,24 @@ html, body {
   width: 100%;
 }
 
+@keyframes roulette-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+ }
+
 .roulette-wheel {
   height: 500px;
   margin: 0 auto;
   display: block;
-  /* transform: rotate(-90deg); */
+}
+
+.roulette-wheel-spin {
+  animation: roulette-spin 1s;
+  animation-iteration-count: 1;
 }
 
 .roulette-wheel-controls {
@@ -76,7 +89,12 @@ html, body {
 
 .wheels-list-item-delete {
   color: #e74c3c;
+  opacity: 0.5;
   margin-top: 3px;
+}
+
+.wheels-list-item-delete:hover {
+  opacity: 1;
 }
 
 .wheels-list-item:hover {

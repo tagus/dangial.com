@@ -75,7 +75,7 @@ export default class Spins extends React.Component {
           />
         </div>
         <div className="spins-wheel">
-          {/* {this.renderWheel()} */}
+          {this.renderWheel()}
         </div>
       </div>
     );

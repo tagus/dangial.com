@@ -42,7 +42,6 @@ export class Wheel {
       const color = shuffled[i % shuffled.length];
       return [ s, color ];
     });
-    return labels;
   }
 
   /**
@@ -63,9 +62,9 @@ export class Wheel {
  */
 export const wheelFixtures = [
   new Wheel(
-    'soft bool',
+    'a 1',
     [ 'sugat', 'dangial', 'tom', 'joe', 'bob', 'ram', 'john', 'bolin', 'rollin' ]),
   new Wheel(
-    'hard bool',
+    'a 2',
     [ 'dingus', 'tangus', 'rangus' ]),
 ];

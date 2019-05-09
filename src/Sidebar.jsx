@@ -8,8 +8,20 @@ import { Wheel } from './models';
  * to select and add new wheels.
  */
 export default class Sidebar extends React.Component {
+  /**
+   * Calls the onWheelDelete callback for the given wheel index.
+   *
+   * @param {React.SyntheticEvent} event The triggering event
+   * @param {Number} index The index of the wheel to delete
+   */
+  handleWheelDelete(event, index) {
+    const { onWheelDelete } = this.props;
+    event.stopPropagation();
+    onWheelDelete(index);
+  }
+
   renderWheels() {
-    const { wheels, selected, onWheelSelect, onWheelDelete } = this.props;
+    const { wheels, selected, onWheelSelect } = this.props;
     return (
       <ul className="wheels-list">
         {wheels.map((w, i) => {
@@ -28,7 +40,7 @@ export default class Sidebar extends React.Component {
               {isSelected &&
                 <i
                   className="far fa-times-circle wheels-list-item-delete"
-                  onClick={() => onWheelDelete(i)}
+                  onClick={e => this.handleWheelDelete(e, i)}
                 />}
             </li>
           );
@@ -47,7 +59,7 @@ export default class Sidebar extends React.Component {
     const { wheels } = this.props;
     return (
       <div>
-        <h1>dangial.com</h1>
+        {/* <h1>dangial.com</h1> */}
         {wheels.length > 0 ? this.renderWheels() : this.renderEmpty()}
       </div>
     );
