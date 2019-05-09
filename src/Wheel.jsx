@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { Wheel } from './models.js';
 
 /**
@@ -19,13 +20,34 @@ function getCoordinates(percent, radius = 1) {
  * A 'spin-able' roulette style wheel
  */
 export default class RouletteWheel extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isSpinning: false,
+    }
+    this.handleSpin = this.handleSpin.bind(this);
+  }
+
+  handleSpin() {
+    this.setState({ isSpinning: true }, () => {
+      setTimeout(() => {
+        this.setState({ isSpinning: false });
+      }, 1000);
+    })
+  }
+
   renderWheel() {
     const { wheel } = this.props;
+    const { isSpinning } = this.state;
     const portion = 1 / wheel.labels.length;
     // if the slice is more than 50%, take the large arc (the long way around)
     const arc = portion > .5 ? 1 : 0;
+    const className = classNames({
+      'roulette-wheel': true,
+      'roulette-wheel-spin': isSpinning,
+    });
     return (
-      <svg className="roulette-wheel" viewBox="-1 -1 2 2">
+      <svg className={className} viewBox="-1 -1 2 2">
         {wheel.labels.map(([ label, color ], i) => {
           const [ x0, y0 ] = getCoordinates(portion * i);
           const [ x1, y1 ] = getCoordinates(portion * (i + 1));
@@ -45,13 +67,12 @@ export default class RouletteWheel extends React.Component {
   }
 
   render() {
-    const { wheel } = this.props;
     return (
       <div className="roulette-wheel-container">
         <div>
           {this.renderWheel()}
           <div className="roulette-wheel-controls">
-            <button className="btn">
+            <button className="btn" onClick={this.handleSpin}>
               <span>spin</span>
             </button>
           </div>

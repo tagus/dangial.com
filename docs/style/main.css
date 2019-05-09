@@ -61,8 +61,10 @@ html, body {
 }
 
 .roulette-wheel-spin {
-  animation: roulette-spin 1s;
-  animation-iteration-count: 1;
+  animation-name: roulette-spin;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
 }
 
 .roulette-wheel-controls {

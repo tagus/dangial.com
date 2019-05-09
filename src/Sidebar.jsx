@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
+import classNames from 'classnames';
 import { Wheel } from './models';
 
 /**
@@ -26,7 +26,7 @@ export default class Sidebar extends React.Component {
       <ul className="wheels-list">
         {wheels.map((w, i) => {
           const isSelected = selected === i;
-          const className = classnames({
+          const className = classNames({
             'wheels-list-item': true,
             'is-selected': isSelected,
           });
