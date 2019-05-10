@@ -67,6 +67,13 @@ html, body {
   animation-iteration-count: infinite;
 }
 
+.roulette-wheel-label {
+  font-size: 0.1px;
+  font-weight: bolder;
+  fill: white;
+  text-transform: uppercase;
+}
+
 .roulette-wheel-controls {
   display: flex;
   justify-content: center;
@@ -87,6 +94,10 @@ html, body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.wheels-empty-label {
+  padding: 1em 0em;
 }
 
 .wheels-list-item-delete {
@@ -114,7 +125,6 @@ html, body {
 
 .btn {
 	width: 150px;
-	display: block;
 	margin: 1em;
 	padding: 1em 2em;
 	border: none;
@@ -148,4 +158,17 @@ html, body {
 .btn:active {
   border-color: #a29bfe;
   color: #a29bfe;
+}
+
+/* placeholder styling */
+.spins-placeholder {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.spins-placeholder-content {
+  text-align: center;
 }

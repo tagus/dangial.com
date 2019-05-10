@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { Wheel } from './models.js';
+import { v4 } from 'uuid';
 
 /**
  * Calculates the coordinates on a circle for a segment
@@ -42,26 +42,27 @@ export default class RouletteWheel extends React.Component {
     const portion = 1 / wheel.labels.length;
     // if the slice is more than 50%, take the large arc (the long way around)
     const arc = portion > .5 ? 1 : 0;
-    const className = classNames({
-      'roulette-wheel': true,
-      'roulette-wheel-spin': isSpinning,
-    });
     return (
-      <svg className={className} viewBox="-1 -1 2 2">
-        {wheel.labels.map(([ label, color ], i) => {
-          const [ x0, y0 ] = getCoordinates(portion * i);
-          const [ x1, y1 ] = getCoordinates(portion * (i + 1));
-          return (
-            <Slot
-              key={label}
-              start={[ x0, y0 ]}
-              end={[ x1, y1 ]}
-              arc={arc}
-              label={label}
-              color={color}
-            />
-          );
-        })}
+      <svg className="roulette-wheel" viewBox="-1 -1 2 2">
+        <g className={isSpinning ? 'roulette-wheel-spin' : null}>
+          {wheel.labels.map(([ label, color ], i) => {
+            const [ x0, y0 ] = getCoordinates(portion * i);
+            const [ xm, ym ] = getCoordinates(portion * (i + 0.5));
+            const [ x1, y1 ] = getCoordinates(portion * (i + 1));
+            return (
+              <Slot
+                key={label}
+                start={[ x0, y0 ]}
+                end={[ x1, y1 ]}
+                mid={[ xm, ym ]}
+                arc={arc}
+                label={label}
+                color={color}
+              />
+            );
+          })}
+          <circle cx="0" cy="0" r="0.3" fill="white"/>
+        </g>
       </svg>
     );
   }
@@ -93,7 +94,9 @@ RouletteWheel.propTypes = {
  * @return {React.Component} The slot component
  */
 function Slot(props) {
+  const slotId = v4();
   const [ x0, y0 ] = props.start;
+  const [ xm, ym ] = props.mid;
   const [ x1, y1 ] = props.end;
   const path = [
     `M ${x0} ${y0}`, // move
@@ -101,6 +104,25 @@ function Slot(props) {
     'L 0 0', // line
   ];
   return (
-    <path key={props.label} d={path.join(' ')} fill={props.color}/>
+    <g>
+      <path d={path.join(' ')} fill={props.color}/>
+      <def>
+        <path id={slotId} d={`M ${xm} ${ym} L 0 0`}/>
+      </def>
+      <text className="roulette-wheel-label" alignmentBaseline="middle">
+        <textPath href={`#${slotId}`} startOffset="15%">
+          {props.label}
+        </textPath>
+      </text>
+    </g>
   );
 }
+
+Slot.propTypes = {
+  start: PropTypes.arrayOf(PropTypes.number).isRequired,
+  end: PropTypes.arrayOf(PropTypes.number).isRequired,
+  mid: PropTypes.arrayOf(PropTypes.number).isRequired,
+  arc: PropTypes.number.isRequired,
+  color: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+};

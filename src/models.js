@@ -62,9 +62,9 @@ export class Wheel {
  */
 export const wheelFixtures = [
   new Wheel(
-    'a 1',
+    'wheel 1',
     [ 'sugat', 'dangial', 'tom', 'joe', 'bob', 'ram', 'john', 'bolin', 'rollin' ]),
   new Wheel(
-    'a 2',
+    'wheel 2',
     [ 'dingus', 'tangus', 'rangus' ]),
 ];

@@ -11,7 +11,7 @@ export default class Spins extends React.Component {
     super(props);
     this.state = {
       wheels: wheelFixtures,
-      selected: 1,
+      selected: 0,
     }
     this.handleWheelSelect = this.handleWheelSelect.bind(this);
     this.handleWheelDelete = this.handleWheelDelete.bind(this);
@@ -51,14 +51,25 @@ export default class Spins extends React.Component {
   renderWheel() {
     const { wheels, selected } = this.state;
     if (selected === -1) {
-      return (
-        <h1>no wheel selected</h1>
-      ); // TODO: add wheel button
+      return this.renderPlaceholder();
     }
     return (
       <RouletteWheel
         wheel={wheels[selected]}
       />
+    );
+  }
+
+  renderPlaceholder() {
+    return (
+      <div className="spins-placeholder">
+        <div className="spins-placeholder-content">
+          <h1>no wheel selected</h1>
+          <button className="btn">
+            <span>create</span>
+          </button>
+        </div>
+      </div>
     );
   }
 

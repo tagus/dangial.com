@@ -51,7 +51,7 @@ export default class Sidebar extends React.Component {
 
   renderEmpty() {
     return (
-      <h4>no wheels found</h4>
+      <h4 className="wheels-empty-label">no wheels found</h4>
     );
   }
 
@@ -59,7 +59,7 @@ export default class Sidebar extends React.Component {
     const { wheels } = this.props;
     return (
       <div>
-        {/* <h1>dangial.com</h1> */}
+        <h1>dangial.com</h1>
         {wheels.length > 0 ? this.renderWheels() : this.renderEmpty()}
       </div>
     );
