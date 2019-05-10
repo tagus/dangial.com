@@ -36,12 +36,29 @@ export default class RouletteWheel extends React.Component {
     })
   }
 
+  renderMarker() {
+    const [ x0, y0 ] = getCoordinates(-0.01);
+    const [ x1, y1 ] = getCoordinates(0.01);
+    const path = [
+      `M ${x0} ${y0}`, // move
+      `A 1 1 0 0 1 ${x1} ${y1}`, // arc
+      'L 0.85 0', // line
+    ];
+    return (
+      <path className="roulette-wheel-marker" d={path.join(' ')}/>
+    );
+  }
+
   renderWheel() {
     const { wheel } = this.props;
     const { isSpinning } = this.state;
     const portion = 1 / wheel.labels.length;
     // if the slice is more than 50%, take the large arc (the long way around)
     const arc = portion > .5 ? 1 : 0;
+
+    const [ xp0, yp0 ] = getCoordinates(0.01);
+    const [ xp1, yp1 ] = getCoordinates(-0.01);
+
     return (
       <svg className="roulette-wheel" viewBox="-1 -1 2 2">
         <g className={isSpinning ? 'roulette-wheel-spin' : null}>
@@ -63,6 +80,7 @@ export default class RouletteWheel extends React.Component {
           })}
           <circle cx="0" cy="0" r="0.3" fill="white"/>
         </g>
+        {this.renderMarker()}
       </svg>
     );
   }

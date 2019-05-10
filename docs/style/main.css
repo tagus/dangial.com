@@ -74,6 +74,10 @@ html, body {
   text-transform: uppercase;
 }
 
+.roulette-wheel-marker {
+  fill: #e26a6a;
+}
+
 .roulette-wheel-controls {
   display: flex;
   justify-content: center;
