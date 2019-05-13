@@ -11,7 +11,6 @@ const colors = [
   '#e67e22',
   '#ff7675',
   '#fd79a8',
-  '#fd79a8',
   '#55efc4',
   '#9AECDB',
   '#55E6C1',
@@ -34,6 +33,20 @@ export class Wheel {
     this.name = name;
     this.labels = this.mapToColors(labels);
     this.history = history;
+  }
+
+  /**
+   * A static constructor to build a wheel object from the given json object.
+   *
+   * @param {Object} obj The json data
+   */
+  static from({ id, name, labels, history }) {
+    const _wheel = new Wheel();
+    _wheel.id = id;
+    _wheel.name = name;
+    _wheel.labels = labels;
+    _wheel.history = history;
+    return _wheel;
   }
 
   /**

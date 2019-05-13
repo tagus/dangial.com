@@ -22,7 +22,7 @@ function getCoordinates(percent, radius = 1) {
 /**
  * A 'spin-able' roulette style wheel
  */
-export default class RouletteWheel extends React.Component {
+export default class RouletteWheel extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {

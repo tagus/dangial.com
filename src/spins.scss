@@ -89,11 +89,14 @@ html, body {
 
   &-spin {
     position: absolute;
+    -webkit-transition: transform 5s cubic-bezier(0.39, 0.58, 0.57, 1);
+    -moz-transition: transform 5s cubic-bezier(0.39, 0.58, 0.57, 1);
     transition: transform 5s cubic-bezier(0.39, 0.58, 0.57, 1);
   }
 
   &-label {
     font-size: 0.1px;
+    letter-spacing: 0.004px;
     font-weight: bolder;
     fill: white;
     paint-order: stroke;
@@ -106,7 +109,9 @@ html, body {
     font-size: 0.12px;
     text-anchor: middle;
     fill: $dark-purple;
+    letter-spacing: 0.004px;
     text-transform: uppercase;
+    font-weight: bolder;
   }
 
   &-marker {
@@ -154,10 +159,6 @@ html, body {
         border-color: $dark-purple;
       }
     }
-  }
-
-  &-empty-label {
-    padding: 1em 0em;
   }
 }
 

@@ -3,21 +3,57 @@ import Sidebar from './Sidebar.jsx';
 import { Wheel, wheelFixtures } from './models.js';
 import RouletteWheel from './Wheel.jsx';
 
+const STORAGE_KEY = 'wheels';
+
 /**
  * Main container for for the spins application.
  */
 export default class Spins extends React.Component {
   constructor(props) {
     super(props);
+    const _wheels = this.retrieveWheels();
     this.state = {
-      wheels: wheelFixtures,
-      selected: 0,
+      wheels: _wheels,
+      selected: _wheels.length > 0 ? 0 : -1,
     };
     this.handleWheelSelect = this.handleWheelSelect.bind(this);
     this.handleWheelDelete = this.handleWheelDelete.bind(this);
+    this.persistWheels = this.persistWheels.bind(this);
   }
 
-  checkLocalStorage() {
+  componentDidMount() {
+    window.addEventListener('beforeunload', this.persistWheels);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('beforeunload', this.persistWheels);
+  }
+
+  /**
+   * Saves existing wheels to the local storage.
+   */
+  persistWheels() {
+    const { wheels } = this.state;
+    const data = JSON.stringify(wheels);
+    console.debug('saving wheels');
+    window.localStorage.setItem(STORAGE_KEY, data);
+  }
+
+  /**
+   * Checks the local storage for any saved wheels, returns an empty
+   * list otherwise.
+   *
+   * @return {Wheel[]} The saved wheels.
+   */
+  retrieveWheels() {
+    try {
+      const data = window.localStorage.getItem(STORAGE_KEY);
+      const _wheels = data ? JSON.parse(data) : [];
+      return _wheels.map(w => Wheel.from(w));
+    } catch (err) {
+      console.warn(err);
+      return [];
+    }
   }
 
   /**

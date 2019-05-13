@@ -74,10 +74,13 @@ html, body {
 }
 .roulette-wheel-spin {
   position: absolute;
+  -webkit-transition: transform 5s cubic-bezier(0.39, 0.58, 0.57, 1);
+  -moz-transition: transform 5s cubic-bezier(0.39, 0.58, 0.57, 1);
   transition: transform 5s cubic-bezier(0.39, 0.58, 0.57, 1);
 }
 .roulette-wheel-label {
   font-size: 0.1px;
+  letter-spacing: 0.004px;
   font-weight: bolder;
   fill: white;
   paint-order: stroke;
@@ -89,7 +92,9 @@ html, body {
   font-size: 0.12px;
   text-anchor: middle;
   fill: #3f51b5;
+  letter-spacing: 0.004px;
   text-transform: uppercase;
+  font-weight: bolder;
 }
 .roulette-wheel-marker {
   fill: #ffeb3b;
@@ -129,9 +134,6 @@ html, body {
 .wheels-list-item .is-selected {
   color: #3f51b5;
   border-color: #3f51b5;
-}
-.wheels-empty-label {
-  padding: 1em 0em;
 }
 
 /* button styling */
