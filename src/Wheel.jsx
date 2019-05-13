@@ -12,8 +12,8 @@ import { Wheel } from './models.js';
  * @param {Number} [radius = 1] The circles radius
  */
 function getCoordinates(percent, radius = 1) {
-  const x = radius * Math.cos(2 * Math.PI * percent / radius);
-  const y = radius * Math.sin(2 * Math.PI * percent / radius);
+  const x = radius * Math.cos(2 * Math.PI * percent);
+  const y = radius * Math.sin(2 * Math.PI * percent);
   return [ x, y ];
 }
 
@@ -94,7 +94,7 @@ export default class RouletteWheel extends React.Component {
   render() {
     return (
       <div className="roulette-wheel-container">
-        <div>
+        <div className="roulette-wheel-content">
           {this.renderWheel()}
           <div className="roulette-wheel-controls">
             <button className="btn" onClick={this.handleSpin}>

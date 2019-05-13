@@ -1,0 +1,188 @@
+@import "https://fonts.googleapis.com/css?family=Source+Sans+Pro";
+
+$red: #e74c3c;
+$dark-purple: #3f51b5;
+$light-purple: #a29bfe;
+$source-sans-pro: 'Source Sans Pro', sans-serif;
+
+/* wheel */
+@keyframes roulette-spin {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+/* history sidebar */
+/* placeholder styling */
+html, body {
+	height: 100%;
+	margin: 0;
+	font-family: $source-sans-pro;
+}
+
+.spins {
+  &-container {
+    position: fixed;
+    display: flex;
+    padding: 0;
+    margin: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  &-sidebar {
+    flex: 1;
+    padding: 1em 2.5em;
+
+    @media (max-width: 768px) {
+  		display: none;
+    }
+  }
+
+  &-wheel {
+    flex: 4;
+  }
+
+  &-placeholder {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &-content {
+    	text-align: center;
+    }
+  }
+}
+
+/* wheel style */
+
+.roulette-wheel {
+	height: auto;
+	width: 100%;
+	margin: 0 auto;
+  display: block;
+
+  &-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+  }
+
+  &-content {
+  	width: 60%;
+    position: relative;
+
+    @media (max-width: 768px) {
+  		width: 75%;
+    }
+  }
+
+  &-spin {
+    position: absolute;
+    transition: transform 5s cubic-bezier(0.39, 0.58, 0.57, 1);
+  }
+
+  &-label {
+    font-size: 0.1px;
+    font-weight: bolder;
+    fill: white;
+    text-transform: uppercase;
+  }
+
+  &-marker {
+    fill: #e26a6a;
+  }
+
+  &-controls {
+    display: flex;
+    justify-content: center;
+    margin-top: 2.3em;
+  }
+}
+
+.wheels {
+  &-list {
+    list-style-type: none;
+    padding: 0;
+
+    &-item {
+      border-bottom: 2px solid black;
+      padding: 1.3em 1em;
+      transition: 0.25s background-color;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      &:hover {
+        cursor: pointer;
+        color: $dark-purple;
+        border-color: $dark-purple;
+      }
+
+      &-delete {
+        color: $red;
+        opacity: 0.5;
+        margin-top: 3px;
+        &:hover {
+          opacity: 1;
+        }
+      }
+
+      .is-selected {
+        color: $dark-purple;
+        border-color: $dark-purple;
+      }
+    }
+  }
+
+  &-empty-label {
+    padding: 1em 0em;
+  }
+}
+
+/* button styling */
+
+.btn {
+	width: 150px;
+	margin: 1em;
+	padding: 1em 2em;
+	border: none;
+	background: none;
+	color: inherit;
+	position: relative;
+	font-size: 0.9em;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	font-weight: bolder;
+	border: 3px solid;
+  border-radius: 40px;
+
+	> span {
+		display: block;
+  }
+
+	&:hover {
+		border-color: $dark-purple;
+		color: $dark-purple;
+		cursor: pointer;
+  }
+
+	&:focus {
+		outline: none;
+  }
+
+	&:active {
+		border-color: $light-purple;
+		color: $light-purple;
+	}
+}

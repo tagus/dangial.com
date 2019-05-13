@@ -12,7 +12,7 @@ export default class Spins extends React.Component {
     this.state = {
       wheels: wheelFixtures,
       selected: 0,
-    }
+    };
     this.handleWheelSelect = this.handleWheelSelect.bind(this);
     this.handleWheelDelete = this.handleWheelDelete.bind(this);
   }
@@ -27,7 +27,7 @@ export default class Spins extends React.Component {
    * @param {Number} index The selected index
    */
   handleWheelSelect(index) {
-    this.setState({ selected: index })
+    this.setState({ selected: index });
   }
 
   /**
@@ -53,9 +53,11 @@ export default class Spins extends React.Component {
     if (selected === -1) {
       return this.renderPlaceholder();
     }
+    const wheel = wheels[selected];
     return (
       <RouletteWheel
-        wheel={wheels[selected]}
+        key={wheel.id}
+        wheel={wheel}
       />
     );
   }

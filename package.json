@@ -7,9 +7,12 @@
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
-    "build": "webpack --config webpack.prod.js",
+    "build:js": "webpack --config webpack.prod.js",
+    "build:css": "sass src/spins.scss docs/style/main.css",
+    "build": "yarn build:js && yarn build:css",
     "start:js": "webpack --config webpack.dev.js --watch",
-    "start:server": "python3 -m 'http.server'"
+    "start:server": "python3 -m 'http.server'",
+    "start:css": "yarn build:css --watch"
   },
   "dependencies": {
     "classnames": "^2.2.6",
@@ -26,6 +29,7 @@
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.5",
     "prop-types": "^15.7.2",
+    "sass": "^1.20.1",
     "webpack-cli": "^3.3.2"
   }
 }
