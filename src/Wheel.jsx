@@ -4,6 +4,8 @@ import React from 'react';
 import { v4 } from 'uuid';
 import { Wheel } from './models.js';
 
+const REVOLUTIONS = 360 * 5;
+
 /**
  * Calculates the coordinates on a circle for a segment
  * relative to the origin.
@@ -26,8 +28,10 @@ export default class RouletteWheel extends React.Component {
     this.state = {
       count: 0,
       rotation: 0, // wheel rotation in degrees
+      result: null, // the most recent spin result
     };
     this.handleSpin = this.handleSpin.bind(this);
+    this.handleSpinEnd = this.handleSpinEnd.bind(this);
   }
 
   handleSpin() {
@@ -37,9 +41,24 @@ export default class RouletteWheel extends React.Component {
       const _count = prev.count + 1;
       return {
         count: _count,
-        rotation: angle + (1080 * _count),
+        rotation: angle + (REVOLUTIONS * _count),
       };
     });
+  }
+
+  handleSpinEnd() {
+    const { wheel } = this.props;
+    const { rotation, count } = this.state;
+    const angle = rotation - (REVOLUTIONS * count);
+    const tilt = 1 - angle / 360;
+
+    const portion = 1 / wheel.labels.length;
+    const ranges = wheel.labels.map((_, i) => [ portion * i, portion * (i + 1) ]);
+    const reducer = (acc, [ start, end ], i) => (tilt >= start && tilt < end) ? i : acc;
+    const index = ranges.reduce(reducer, null);
+    wheel.addHistory(index);
+
+    this.setState({ result: index });
   }
 
   renderMarker() {
@@ -55,9 +74,24 @@ export default class RouletteWheel extends React.Component {
     );
   }
 
+  renderCircle() {
+    const { wheel } = this.props;
+    const { result } = this.state;
+    return (
+      <g>
+        <circle cx="0" cy="0" r="0.35" fill="white"/>
+        {result !== null &&
+          <text x="0" y="0.03" className="roulette-wheel-result">
+            {wheel.get(result)}
+          </text>
+        }
+      </g>
+    );
+  }
+
   renderWheel() {
     const { wheel } = this.props;
-    const { rotation } = this.state;
+    const { rotation, result } = this.state;
     const portion = 1 / wheel.labels.length;
     // if the slice is more than 50%, take the large arc (the long way around)
     const arc = portion > .5 ? 1 : 0;
@@ -67,7 +101,11 @@ export default class RouletteWheel extends React.Component {
 
     return (
       <svg className="roulette-wheel" viewBox="-1 -1 2 2">
-        <g className="roulette-wheel-spin" transform={`rotate(${rotation})`}>
+        <g
+          className="roulette-wheel-spin"
+          transform={`rotate(${rotation})`}
+          onTransitionEnd={this.handleSpinEnd}
+        >
           {wheel.labels.map(([ label, color ], i) => {
             const [ x0, y0 ] = getCoordinates(portion * i);
             const [ xm, ym ] = getCoordinates(portion * (i + 0.5));
@@ -84,8 +122,8 @@ export default class RouletteWheel extends React.Component {
               />
             );
           })}
-          <circle cx="0" cy="0" r="0.3" fill="white"/>
         </g>
+        {this.renderCircle()}
         {this.renderMarker()}
       </svg>
     );

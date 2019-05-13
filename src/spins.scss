@@ -3,6 +3,7 @@
 $red: #e74c3c;
 $dark-purple: #3f51b5;
 $light-purple: #a29bfe;
+$yellow: #ffeb3b;
 $source-sans-pro: 'Source Sans Pro', sans-serif;
 
 /* wheel */
@@ -95,11 +96,21 @@ html, body {
     font-size: 0.1px;
     font-weight: bolder;
     fill: white;
+    paint-order: stroke;
+    stroke: black;
+    stroke-width: 0.01px;
+    text-transform: uppercase;
+  }
+
+  &-result {
+    font-size: 0.12px;
+    text-anchor: middle;
+    fill: $dark-purple;
     text-transform: uppercase;
   }
 
   &-marker {
-    fill: #e26a6a;
+    fill: $yellow;
   }
 
   &-controls {

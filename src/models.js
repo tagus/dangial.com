@@ -58,12 +58,12 @@ export class Wheel {
   /**
    * Stores the given label to the wheel's history.
    *
-   * @param {String} label The label to add to the history
+   * @param {Number} index The index of the label to add to the history
    */
-  addHistory(label) {
+  addHistory(index) {
     this.history.push({
       timestamp: Date.now(),
-      label: label,
+      index : index,
     });
   }
 }
