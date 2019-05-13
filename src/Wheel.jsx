@@ -1,7 +1,8 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { Wheel } from './models.js';
+import random from 'lodash/random';
+import React from 'react';
 import { v4 } from 'uuid';
+import { Wheel } from './models.js';
 
 /**
  * Calculates the coordinates on a circle for a segment
@@ -23,17 +24,22 @@ export default class RouletteWheel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isSpinning: false,
-    }
+      count: 0,
+      rotation: 0, // wheel rotation in degrees
+    };
     this.handleSpin = this.handleSpin.bind(this);
   }
 
   handleSpin() {
-    this.setState({ isSpinning: true }, () => {
-      setTimeout(() => {
-        this.setState({ isSpinning: false });
-      }, 1000);
-    })
+    const { wheel } = this.props;
+    const angle = random(360, true);
+    this.setState(prev => {
+      const _count = prev.count + 1;
+      return {
+        count: _count,
+        rotation: angle + (1080 * _count),
+      };
+    });
   }
 
   renderMarker() {
@@ -51,7 +57,7 @@ export default class RouletteWheel extends React.Component {
 
   renderWheel() {
     const { wheel } = this.props;
-    const { isSpinning } = this.state;
+    const { rotation } = this.state;
     const portion = 1 / wheel.labels.length;
     // if the slice is more than 50%, take the large arc (the long way around)
     const arc = portion > .5 ? 1 : 0;
@@ -61,7 +67,7 @@ export default class RouletteWheel extends React.Component {
 
     return (
       <svg className="roulette-wheel" viewBox="-1 -1 2 2">
-        <g className={isSpinning ? 'roulette-wheel-spin' : null}>
+        <g className="roulette-wheel-spin" transform={`rotate(${rotation})`}>
           {wheel.labels.map(([ label, color ], i) => {
             const [ x0, y0 ] = getCoordinates(portion * i);
             const [ xm, ym ] = getCoordinates(portion * (i + 0.5));

@@ -36,6 +36,17 @@ export class Wheel {
     this.history = history;
   }
 
+  /**
+   * Retrieves the label at the given index.
+   *
+   * @param {Number} index The label index
+   * @return {String} The selected label
+   */
+  get(index) {
+    const [ label, _ ] = this.labels[index];
+    return label;
+  }
+
   mapToColors(labels) {
     const shuffled = shuffle(colors);
     return labels.map((s, i) => {
@@ -53,7 +64,7 @@ export class Wheel {
     this.history.push({
       timestamp: Date.now(),
       label: label,
-    })
+    });
   }
 }
 
