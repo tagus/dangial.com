@@ -51,16 +51,22 @@ export default class Sidebar extends React.Component {
 
   renderEmpty() {
     return (
-      <h4 className="wheels-empty-label">no wheels found</h4>
+      <div>
+        <h4 className="wheels-empty-label">no wheels found</h4>
+        <hr/>
+      </div>
     );
   }
 
   render() {
-    const { wheels } = this.props;
+    const { wheels, onWheelAdd } = this.props;
     return (
       <div>
         <h1>dangial.com</h1>
         {wheels.length > 0 ? this.renderWheels() : this.renderEmpty()}
+        <div className="wheels-add">
+          <i className="far fa-plus-square" onClick={onWheelAdd}></i>
+        </div>
       </div>
     );
   }
@@ -71,6 +77,7 @@ Sidebar.propTypes = {
   selected: PropTypes.number,
   onWheelSelect: PropTypes.func,
   onWheelDelete: PropTypes.func,
+  onWheelAdd: PropTypes.func,
 };
 
 Sidebar.defaultProps = {
@@ -78,4 +85,5 @@ Sidebar.defaultProps = {
   selected: -1,
   onWheelSelect: () => {},
   onWheelDelete: () => {},
+  onWheelAdd: () => {},
 };

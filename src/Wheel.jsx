@@ -172,7 +172,7 @@ function Slot(props) {
         <path id={slotId} d={`M ${xm} ${ym} L 0 0`}/>
       </def>
       <text className="roulette-wheel-label" alignmentBaseline="middle">
-        <textPath href={`#${slotId}`} startOffset="15%">
+        <textPath href={`#${slotId}`} startOffset="13%">
           {props.label}
         </textPath>
       </text>

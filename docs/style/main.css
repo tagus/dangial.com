@@ -124,16 +124,27 @@ html, body {
   border-color: #3f51b5;
 }
 .wheels-list-item-delete {
-  color: #e74c3c;
   opacity: 0.5;
   margin-top: 3px;
 }
 .wheels-list-item-delete:hover {
+  color: #e74c3c;
   opacity: 1;
 }
 .wheels-list-item .is-selected {
   color: #3f51b5;
   border-color: #3f51b5;
+}
+.wheels-add {
+  margin-top: 1.2em;
+  text-align: center;
+}
+.wheels-add i {
+  font-size: 1.6em;
+}
+.wheels-add i:hover {
+  cursor: pointer;
+  color: #3f51b5;
 }
 
 /* button styling */
@@ -166,6 +177,70 @@ html, body {
 .btn:active {
   border-color: #a29bfe;
   color: #a29bfe;
+}
+
+/* form styling */
+.wheel-form-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  widows: 100%;
+}
+.wheel-form-add {
+  text-align: center;
+}
+.wheel-form-add i {
+  font-size: 1.6em;
+}
+.wheel-form-add i:hover {
+  cursor: pointer;
+  color: #3f51b5;
+}
+.wheel-form-title {
+  text-align: center;
+}
+.wheel-form-input {
+  text-align: center;
+  position: relative;
+}
+.wheel-form-input-container {
+  margin-bottom: 1em;
+  max-height: 300px;
+  overflow: scroll;
+}
+.wheel-form-input-delete {
+  position: relative;
+  left: -35px;
+  opacity: 0.5;
+}
+.wheel-form-input-delete:hover {
+  color: #e74c3c;
+  opacity: 1;
+  cursor: pointer;
+}
+.wheel-form-input input {
+  position: relative;
+  left: 5px;
+  border: 3px solid black;
+  border-radius: 40px;
+  font-size: 0.9em;
+  margin: 1em auto;
+  display: inline-block;
+  outline: 0;
+  padding: 1em 2em;
+  width: 60%;
+}
+.wheel-form-input input::placeholder {
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+.wheel-form-input input:focus {
+  border-color: #3f51b5;
+}
+.wheel-form-input input:focus::placeholder {
+  color: #3f51b5;
 }
 
 /*# sourceMappingURL=main.css.map */

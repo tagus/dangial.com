@@ -2,6 +2,7 @@ import React from 'react';
 import Sidebar from './Sidebar.jsx';
 import { Wheel, wheelFixtures } from './models.js';
 import RouletteWheel from './Wheel.jsx';
+import WheelForm from './WheelForm.jsx';
 
 const STORAGE_KEY = 'wheels';
 
@@ -15,10 +16,14 @@ export default class Spins extends React.Component {
     this.state = {
       wheels: _wheels,
       selected: _wheels.length > 0 ? 0 : -1,
+      isAddingWheel: false,
     };
     this.handleWheelSelect = this.handleWheelSelect.bind(this);
     this.handleWheelDelete = this.handleWheelDelete.bind(this);
     this.persistWheels = this.persistWheels.bind(this);
+    this.toggleAddingWheel = this.toggleAddingWheel.bind(this);
+    this.handleWheelSave = this.handleWheelSave.bind(this);
+    this.handleWheelAdd = this.handleWheelAdd.bind(this);
   }
 
   componentDidMount() {
@@ -63,7 +68,10 @@ export default class Spins extends React.Component {
    * @param {Number} index The selected index
    */
   handleWheelSelect(index) {
-    this.setState({ selected: index });
+    this.setState({
+      selected: index,
+      isAddingWheel: false,
+    });
   }
 
   /**
@@ -81,6 +89,41 @@ export default class Spins extends React.Component {
         wheels: _wheels,
         selected: _selected,
       };
+    });
+  }
+
+  /**
+   * Toggles visibility of the wheel form component.
+   */
+  toggleAddingWheel() {
+    this.setState(prev => {
+      return { isAddingWheel: !prev.isAddingWheel };
+    });
+  }
+
+  /**
+   * Handles saving the new wheel.
+   *
+   * @param {Wheel} labels The new wheel
+   */
+  handleWheelSave(wheel) {
+    this.setState(prev => {
+      const _wheels = prev.wheels.concat([ wheel ]);
+      return {
+        isAddingWheel: false,
+        wheels: _wheels,
+        selected: _wheels.length - 1,
+      };
+    });
+  }
+
+  /**
+   * Renders the new wheel form and deselects the selected wheel.
+   */
+  handleWheelAdd() {
+    this.setState({
+      isAddingWheel: true,
+      selected: -1,
     });
   }
 
@@ -103,7 +146,7 @@ export default class Spins extends React.Component {
       <div className="spins-placeholder">
         <div className="spins-placeholder-content">
           <h1>no wheel selected</h1>
-          <button className="btn">
+          <button className="btn" onClick={this.toggleAddingWheel}>
             <span>create</span>
           </button>
         </div>
@@ -112,19 +155,22 @@ export default class Spins extends React.Component {
   }
 
   render() {
-    const { wheels, selected } = this.state;
+    const { wheels, selected, isAddingWheel } = this.state;
     return (
       <div className="spins-container">
         <div className="spins-sidebar">
           <Sidebar
             wheels={wheels}
             onWheelSelect={this.handleWheelSelect}
+            onWheelAdd={this.handleWheelAdd}
             onWheelDelete={this.handleWheelDelete}
             selected={selected}
           />
         </div>
         <div className="spins-wheel">
-          {this.renderWheel()}
+          {isAddingWheel
+            ? <WheelForm onSave={this.handleWheelSave} onCancel={this.toggleAddingWheel}/>
+            : this.renderWheel()}
         </div>
       </div>
     );

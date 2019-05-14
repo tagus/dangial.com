@@ -146,10 +146,10 @@ html, body {
       }
 
       &-delete {
-        color: $red;
         opacity: 0.5;
         margin-top: 3px;
         &:hover {
+          color: $red;
           opacity: 1;
         }
       }
@@ -157,6 +157,18 @@ html, body {
       .is-selected {
         color: $dark-purple;
         border-color: $dark-purple;
+      }
+    }
+  }
+
+  &-add {
+    margin-top: 1.2em;
+    text-align: center;
+    i {
+      font-size: 1.6em;
+      &:hover {
+        cursor: pointer;
+        color: $dark-purple;
       }
     }
   }
@@ -197,4 +209,80 @@ html, body {
 		border-color: $light-purple;
 		color: $light-purple;
 	}
+}
+
+/* form styling */
+.wheel-form {
+  &-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    widows: 100%;
+  }
+
+  &-add {
+    text-align: center;
+    i {
+      font-size: 1.6em;
+      &:hover {
+        cursor: pointer;
+        color: $dark-purple;
+      }
+    }
+  }
+
+  &-title {
+    text-align: center;
+  }
+
+  &-input {
+    text-align: center;
+    position: relative;
+
+    &-container {
+      margin-bottom: 1em;
+      max-height: 300px;
+      overflow: scroll;
+    }
+
+    &-delete {
+      // margin-left: -35px;
+      position: relative;
+      left: -35px;
+      opacity: 0.5;
+      &:hover {
+        color: $red;
+        opacity: 1;
+        cursor: pointer;
+      }
+    }
+
+    input {
+      position: relative;
+      left: 5px;
+      border: 3px solid black;
+      border-radius: 40px;
+
+      font-size: 0.9em;
+      margin: 1em auto;
+      display: inline-block;
+      outline: 0;
+      padding: 1em 2em;
+      width: 60%;
+
+      &::placeholder {
+        text-transform: uppercase;
+        font-weight: bold;
+        letter-spacing: 2px;
+      }
+
+      &:focus {
+        border-color: $dark-purple;
+        &::placeholder {
+          color: $dark-purple;
+        }
+      }
+    }
+  }
 }
