@@ -154,7 +154,7 @@ html, body {
         }
       }
 
-      .is-selected {
+      &.is-selected {
         color: $dark-purple;
         border-color: $dark-purple;
       }

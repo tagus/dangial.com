@@ -82,6 +82,7 @@ export default class WheelForm extends React.PureComponent {
               onDelete={() => this.handleDelete(i)}
               showDelete={labels.length !== 1}
               placeholder='add label'
+              shouldFocus={labels.length !== 1 && labels.length - 1 === i}
             />
           );
         })}
@@ -101,6 +102,7 @@ export default class WheelForm extends React.PureComponent {
             value={name}
             placeholder='wheel name'
             onChange={name => this.setState({ name })}
+            shouldFocus={true}
           />
           <hr/>
           {labels.length > 0 && this.renderForm()}
@@ -135,7 +137,7 @@ WheelForm.defaultProps = {
  *
  * @param {Object} params
  */
-function Input({ value, onChange, onDelete, showDelete, placeholder }) {
+function Input({ value, onChange, onDelete, showDelete, placeholder, shouldFocus }) {
   return (
     <div className="wheel-form-input">
       <input
@@ -143,7 +145,8 @@ function Input({ value, onChange, onDelete, showDelete, placeholder }) {
         placeholder={placeholder}
         value={value}
         onChange={e => onChange(e.target.value)}
-        required="required"
+        required={true}
+        autoFocus={shouldFocus}
       />
       {showDelete &&
         <i className="far fa-times-circle wheel-form-input-delete" onClick={onDelete}/>}
@@ -154,6 +157,7 @@ function Input({ value, onChange, onDelete, showDelete, placeholder }) {
 Input.propTypes = {
   value: PropTypes.string,
   showDelete: PropTypes.bool,
+  shouldFocus: PropTypes.bool,
   onChange: PropTypes.func,
   onDelete: PropTypes.func,
   placeholder: PropTypes.string.isRequired,
@@ -162,6 +166,7 @@ Input.propTypes = {
 Input.defaultProps = {
   value: '',
   showDelete: true,
+  shouldFocus: false,
   onChange: () => {},
   onDelete: () => {},
 };

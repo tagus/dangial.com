@@ -131,7 +131,7 @@ html, body {
   color: #e74c3c;
   opacity: 1;
 }
-.wheels-list-item .is-selected {
+.wheels-list-item.is-selected {
   color: #3f51b5;
   border-color: #3f51b5;
 }

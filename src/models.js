@@ -80,15 +80,3 @@ export class Wheel {
     });
   }
 }
-
-/**
- * Fake testing data
- */
-export const wheelFixtures = [
-  new Wheel(
-    'wheel 1',
-    [ 'sugat', 'dangial', 'tom', 'joe', 'bob', 'ram', 'john', 'bolin', 'rollin' ]),
-  new Wheel(
-    'wheel 2',
-    [ 'dingus', 'tangus', 'rangus' ]),
-];

@@ -1,6 +1,6 @@
 import React from 'react';
 import Sidebar from './Sidebar.jsx';
-import { Wheel, wheelFixtures } from './models.js';
+import { Wheel } from './models.js';
 import RouletteWheel from './Wheel.jsx';
 import WheelForm from './WheelForm.jsx';
 
