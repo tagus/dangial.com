@@ -103,6 +103,7 @@ html, body {
     stroke: black;
     stroke-width: 0.01px;
     text-transform: uppercase;
+    dominant-baseline: central;
   }
 
   &-result {
@@ -242,8 +243,8 @@ html, body {
 
     &-container {
       margin-bottom: 1em;
-      max-height: 300px;
-      overflow: scroll;
+      // max-height: 300px;
+      // overflow: scroll;
     }
 
     &-delete {

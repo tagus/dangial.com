@@ -87,6 +87,7 @@ html, body {
   stroke: black;
   stroke-width: 0.01px;
   text-transform: uppercase;
+  dominant-baseline: central;
 }
 .roulette-wheel-result {
   font-size: 0.12px;
@@ -206,8 +207,6 @@ html, body {
 }
 .wheel-form-input-container {
   margin-bottom: 1em;
-  max-height: 300px;
-  overflow: scroll;
 }
 .wheel-form-input-delete {
   position: relative;

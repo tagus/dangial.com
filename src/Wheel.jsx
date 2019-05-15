@@ -103,7 +103,7 @@ export default class RouletteWheel extends React.PureComponent {
       <svg className="roulette-wheel" viewBox="-1 -1 2 2">
         <g
           className="roulette-wheel-spin"
-          transform={`rotate(${rotation})`}
+          style={{ transform: `rotate(${rotation}deg)` }}
           onTransitionEnd={this.handleSpinEnd}
         >
           {wheel.labels.map(([ label, color ], i) => {
@@ -168,10 +168,11 @@ function Slot(props) {
   return (
     <g>
       <path d={path.join(' ')} fill={props.color}/>
+      {/* <path fill="red" d={`M ${xm} ${ym} L 0 0`} stroke="red" strokeWidth="0.01" /> */}
       <def>
         <path id={slotId} d={`M ${xm} ${ym} L 0 0`}/>
       </def>
-      <text className="roulette-wheel-label" alignmentBaseline="middle">
+      <text className="roulette-wheel-label">
         <textPath href={`#${slotId}`} startOffset="13%">
           {props.label}
         </textPath>
