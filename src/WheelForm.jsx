@@ -1,6 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Wheel } from './models.js';
+import classNames from 'classnames';
+
+const MAX_LABELS = 12;
 
 /**
  * A wheel form.
@@ -34,8 +37,11 @@ export default class WheelForm extends React.PureComponent {
    */
   handleAdd() {
     this.setState(prev => {
-      const _labels = prev.labels.concat([ '' ]);
-      return { labels: _labels };
+      if (prev.labels.length < MAX_LABELS) {
+        const _labels = prev.labels.concat([ '' ]);
+        return { labels: _labels };
+      }
+      return {};
     });
   }
 
@@ -83,6 +89,8 @@ export default class WheelForm extends React.PureComponent {
               showDelete={labels.length !== 1}
               placeholder='add label'
               shouldFocus={labels.length !== 1 && labels.length - 1 === i}
+              onEnter={this.handleAdd}
+              onBackspace={() => l.length === 0 && this.handleDelete(i)}
             />
           );
         })}
@@ -106,16 +114,18 @@ export default class WheelForm extends React.PureComponent {
           />
           <hr/>
           {labels.length > 0 && this.renderForm()}
-          {labels.length <= 12 &&
+          <div className="wheel-form-controls">
+            {labels.length < MAX_LABELS &&
             <div className="wheel-form-add">
               <i className="far fa-plus-square" onClick={this.handleAdd}></i>
             </div>}
-          <button type="submit" className="btn">
-            <span>add</span>
-          </button>
-          <button className="btn" onClick={onCancel}>
-            <span>cancel</span>
-          </button>
+            <button type="submit" className="btn">
+              <span>add</span>
+            </button>
+            <button className="btn" onClick={onCancel}>
+              <span>cancel</span>
+            </button>
+          </div>
         </form>
       </div>
     );
@@ -137,19 +147,35 @@ WheelForm.defaultProps = {
  *
  * @param {Object} params
  */
-function Input({ value, onChange, onDelete, showDelete, placeholder, shouldFocus }) {
+function Input(props) {
+  const className = classNames({
+    'wheel-form-input': true,
+    'wheel-form-input-offset': props.showDelete,
+  });
   return (
-    <div className="wheel-form-input">
+    <div className={className}>
       <input
         type="text"
-        placeholder={placeholder}
-        value={value}
-        onChange={e => onChange(e.target.value)}
+        placeholder={props.placeholder}
+        value={props.value}
+        onChange={e => props.onChange(e.target.value)}
         required={true}
-        autoFocus={shouldFocus}
+        autoFocus={props.shouldFocus}
+        onKeyDown={e => {
+          switch (e.keyCode) {
+            case 13:
+              e.preventDefault();
+              props.onEnter();
+              break;
+            case 8:
+              props.onBackspace();
+            default:
+              break;
+          }
+        }}
       />
-      {showDelete &&
-        <i className="far fa-times-circle wheel-form-input-delete" onClick={onDelete}/>}
+      {props.showDelete &&
+        <i className="far fa-times-circle wheel-form-input-delete" onClick={props.onDelete}/>}
     </div>
   );
 }
@@ -160,6 +186,8 @@ Input.propTypes = {
   shouldFocus: PropTypes.bool,
   onChange: PropTypes.func,
   onDelete: PropTypes.func,
+  onEnter: PropTypes.func,
+  onBackspace: PropTypes.func,
   placeholder: PropTypes.string.isRequired,
 };
 
@@ -169,4 +197,6 @@ Input.defaultProps = {
   shouldFocus: false,
   onChange: () => {},
   onDelete: () => {},
+  onEnter: () => {},
+  onBackspace: () => {},
 };

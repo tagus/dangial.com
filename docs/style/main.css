@@ -37,13 +37,14 @@ html, body {
 }
 .spins-wheel {
   flex: 4;
+  overflow: scroll;
 }
 .spins-placeholder {
   height: 100%;
   width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  margin-top: 3em;
 }
 .spins-placeholder-content {
   text-align: center;
@@ -52,7 +53,7 @@ html, body {
 /* wheel style */
 .roulette-wheel {
   height: auto;
-  width: 100%;
+  width: 90%;
   margin: 0 auto;
   display: block;
 }
@@ -87,7 +88,6 @@ html, body {
   stroke: black;
   stroke-width: 0.01px;
   text-transform: uppercase;
-  dominant-baseline: central;
 }
 .roulette-wheel-result {
   font-size: 0.12px;
@@ -183,13 +183,19 @@ html, body {
 /* form styling */
 .wheel-form-container {
   display: flex;
-  align-items: center;
+  margin-top: 3em;
   justify-content: center;
   height: 100%;
-  widows: 100%;
+  width: 100%;
 }
-.wheel-form-add {
+@media (max-width: 768px) {
+  .wheel-form-container {
+    display: block;
+  }
+}
+.wheel-form-controls {
   text-align: center;
+  margin-bottom: 1em;
 }
 .wheel-form-add i {
   font-size: 1.6em;
@@ -210,7 +216,7 @@ html, body {
 }
 .wheel-form-input-delete {
   position: relative;
-  left: -35px;
+  left: -26px;
   opacity: 0.5;
 }
 .wheel-form-input-delete:hover {
@@ -218,9 +224,11 @@ html, body {
   opacity: 1;
   cursor: pointer;
 }
+.wheel-form-input-offset input {
+  left: 9px;
+}
 .wheel-form-input input {
   position: relative;
-  left: 5px;
   border: 3px solid black;
   border-radius: 40px;
   font-size: 0.9em;

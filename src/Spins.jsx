@@ -3,6 +3,7 @@ import Sidebar from './Sidebar.jsx';
 import { Wheel } from './models.js';
 import RouletteWheel from './Wheel.jsx';
 import WheelForm from './WheelForm.jsx';
+import Cookie from 'js-cookie';
 
 const STORAGE_KEY = 'wheels';
 
@@ -41,7 +42,11 @@ export default class Spins extends React.Component {
     const { wheels } = this.state;
     const data = JSON.stringify(wheels);
     console.debug('saving wheels');
-    window.localStorage.setItem(STORAGE_KEY, data);
+    if (window.localStorage) {
+      window.localStorage.setItem(STORAGE_KEY, data);
+    } else {
+      Cookie.set(STORAGE_KEY, data);
+    }
   }
 
   /**
@@ -52,7 +57,12 @@ export default class Spins extends React.Component {
    */
   retrieveWheels() {
     try {
-      const data = window.localStorage.getItem(STORAGE_KEY);
+      let data;
+      if (window.localStorage) {
+        data = window.localStorage.getItem(STORAGE_KEY);
+      } else {
+        data = Cookie.get(STORAGE_KEY);
+      }
       const _wheels = data ? JSON.parse(data) : [];
       return _wheels.map(w => Wheel.from(w));
     } catch (err) {

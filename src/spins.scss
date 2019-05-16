@@ -47,6 +47,7 @@ html, body {
 
   &-wheel {
     flex: 4;
+    overflow: scroll;
   }
 
   &-placeholder {
@@ -54,7 +55,8 @@ html, body {
     width: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
+    margin-top: 3em;
+    // align-items: center;
 
     &-content {
     	text-align: center;
@@ -66,7 +68,7 @@ html, body {
 
 .roulette-wheel {
 	height: auto;
-	width: 100%;
+	width: 90%;
 	margin: 0 auto;
   display: block;
 
@@ -103,7 +105,7 @@ html, body {
     stroke: black;
     stroke-width: 0.01px;
     text-transform: uppercase;
-    dominant-baseline: central;
+    // dominant-baseline: central;
   }
 
   &-result {
@@ -216,20 +218,27 @@ html, body {
 .wheel-form {
   &-container {
     display: flex;
-    align-items: center;
+    // align-items: center;
+    margin-top: 3em;
     justify-content: center;
     height: 100%;
-    widows: 100%;
+    width: 100%;
+
+    @media (max-width: 768px) {
+  		display: block;
+    }
   }
 
-  &-add {
+  &-controls {
     text-align: center;
-    i {
-      font-size: 1.6em;
-      &:hover {
-        cursor: pointer;
-        color: $dark-purple;
-      }
+    margin-bottom: 1em;
+  }
+
+  &-add i {
+    font-size: 1.6em;
+    &:hover {
+      cursor: pointer;
+      color: $dark-purple;
     }
   }
 
@@ -250,7 +259,7 @@ html, body {
     &-delete {
       // margin-left: -35px;
       position: relative;
-      left: -35px;
+      left: -26px;
       opacity: 0.5;
       &:hover {
         color: $red;
@@ -259,9 +268,14 @@ html, body {
       }
     }
 
+    &-offset {
+      input {
+        left: 9px;
+      }
+    }
+
     input {
       position: relative;
-      left: 5px;
       border: 3px solid black;
       border-radius: 40px;
 
