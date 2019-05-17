@@ -29,7 +29,7 @@ export default class WheelForm extends React.PureComponent {
     const { onSave } = this.props;
     const { name, labels } = this.state;
     const _labels = labels.map(l => l.trim()).filter(l => l !== '');
-    onSave(new Wheel(name, _labels));
+    _labels.length > 0 && onSave(new Wheel(name, _labels));
   }
 
   /**
@@ -156,10 +156,10 @@ function Input(props) {
     <div className={className}>
       <input
         type="text"
+        required={true}
         placeholder={props.placeholder}
         value={props.value}
         onChange={e => props.onChange(e.target.value)}
-        required={true}
         autoFocus={props.shouldFocus}
         onKeyDown={e => {
           switch (e.keyCode) {

@@ -108,14 +108,18 @@ export default class RouletteWheel extends React.PureComponent {
         >
           {wheel.labels.map(([ label, color ], i) => {
             const [ x0, y0 ] = getCoordinates(portion * i);
-            const [ xm, ym ] = getCoordinates(portion * (i + 0.5));
             const [ x1, y1 ] = getCoordinates(portion * (i + 1));
+
+            const [ xt0, yt0 ] = getCoordinates(portion * (i + 0.425), 0.4);
+            const [ xt1, yt1 ] = getCoordinates(portion * (i + 0.425), 0.9);
+
             return (
               <Slot
                 key={label}
                 start={[ x0, y0 ]}
                 end={[ x1, y1 ]}
-                mid={[ xm, ym ]}
+                textStart={[ xt0, yt0 ]}
+                textEnd={[ xt1, yt1 ]}
                 arc={arc}
                 label={label}
                 color={color}
@@ -158,8 +162,11 @@ RouletteWheel.propTypes = {
 function Slot(props) {
   const slotId = v4();
   const [ x0, y0 ] = props.start;
-  const [ xm, ym ] = props.mid;
   const [ x1, y1 ] = props.end;
+
+  const [ xt0, yt0 ] = props.textStart;
+  const [ xt1, yt1 ] = props.textEnd;
+
   const path = [
     `M ${x0} ${y0}`, // move
     `A 1 1 0 ${props.arc} 1 ${x1} ${y1}`, // arc
@@ -168,12 +175,12 @@ function Slot(props) {
   return (
     <g>
       <path d={path.join(' ')} fill={props.color}/>
-      {/* <path fill="red" d={`M ${xm} ${ym} L 0 0`} stroke="red" strokeWidth="0.01" /> */}
+      {/* <path fill="red" d={`M ${xt1} ${yt1} L ${xt0} ${yt0}`} stroke="red" strokeWidth="0.01" /> */}
       <def>
-        <path id={slotId} d={`M ${xm} ${ym} L 0 0`}/>
+        <path id={slotId} d={`M ${xt1} ${yt1} L ${xt0} ${yt0}`}/>
       </def>
-      <text className="roulette-wheel-label">
-        <textPath href={`#${slotId}`} startOffset="13%">
+      <text className="roulette-wheel-label" lengthAdjust="spacing">
+        <textPath href={`#${slotId}`}>
           {props.label}
         </textPath>
       </text>
@@ -184,7 +191,8 @@ function Slot(props) {
 Slot.propTypes = {
   start: PropTypes.arrayOf(PropTypes.number).isRequired,
   end: PropTypes.arrayOf(PropTypes.number).isRequired,
-  mid: PropTypes.arrayOf(PropTypes.number).isRequired,
+  textStart: PropTypes.arrayOf(PropTypes.number).isRequired,
+  textEnd: PropTypes.arrayOf(PropTypes.number).isRequired,
   arc: PropTypes.number.isRequired,
   color: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,

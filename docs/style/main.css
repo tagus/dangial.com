@@ -80,7 +80,7 @@ html, body {
   transition: transform 5s cubic-bezier(0.39, 0.58, 0.57, 1);
 }
 .roulette-wheel-label {
-  font-size: 0.1px;
+  font-size: 0.09px;
   letter-spacing: 0.004px;
   font-weight: bolder;
   fill: white;
