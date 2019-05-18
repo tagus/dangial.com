@@ -85,15 +85,16 @@ html, body {
   transition: transform 5s cubic-bezier(0.39, 0.58, 0.57, 1);
 }
 .roulette-wheel-label {
-  font-size: 0.1px;
-  letter-spacing: 0.004px;
+  font-size: 1.2em;
+  letter-spacing: 0.75px;
   font-weight: bolder;
   fill: white;
   paint-order: stroke;
   stroke: black;
-  stroke-width: 0.01px;
+  stroke-width: 1px;
   text-transform: uppercase;
   text-anchor: middle;
+  dominant-baseline: central;
 }
 .roulette-wheel-result {
   display: flex;

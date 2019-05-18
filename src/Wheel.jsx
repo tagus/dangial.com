@@ -61,13 +61,13 @@ export default class RouletteWheel extends React.PureComponent {
     this.setState({ result: index });
   }
 
-  renderMarker() {
-    const [ x0, y0 ] = getCoordinates(-0.01);
-    const [ x1, y1 ] = getCoordinates(0.01);
+  renderMarker(radius) {
+    const [ x0, y0 ] = getCoordinates(-0.01, radius);
+    const [ x1, y1 ] = getCoordinates(0.01, radius);
     const path = [
       `M ${x0} ${y0}`, // move
-      `A 1 1 0 0 1 ${x1} ${y1}`, // arc
-      'L 0.85 0', // line
+      `A ${radius} ${radius} 0 0 1 ${x1} ${y1}`, // arc
+      'L 127 0', // line
     ];
     return (
       <path className="roulette-wheel-marker" d={path.join(' ')}/>
@@ -81,22 +81,23 @@ export default class RouletteWheel extends React.PureComponent {
     // if the slice is more than 50%, take the large arc (the long way around)
     const arc = portion > .5 ? 1 : 0;
 
+    const radius = 150;
     const [ xp0, yp0 ] = getCoordinates(0.01);
     const [ xp1, yp1 ] = getCoordinates(-0.01);
 
     return (
-      <svg className="roulette-wheel" viewBox="-1 -1 2 2">
+      <svg className="roulette-wheel" viewBox="-150 -150 300 300">
         <g
           className="roulette-wheel-spin"
           style={{ transform: `rotate(${rotation}deg)` }}
           onTransitionEnd={this.handleSpinEnd}
         >
           {wheel.labels.map((l, i) => {
-            const [ x0, y0 ] = getCoordinates(portion * i);
-            const [ x1, y1 ] = getCoordinates(portion * (i + 1));
+            const [ x0, y0 ] = getCoordinates(portion * i, radius);
+            const [ x1, y1 ] = getCoordinates(portion * (i + 1), radius);
 
-            const [ xt0, yt0 ] = getCoordinates(portion * (i + 0.425), 0.30);
-            const [ xt1, yt1 ] = getCoordinates(portion * (i + 0.425), 0.95);
+            const [ xt0, yt0 ] = getCoordinates(portion * (i + 0.5), 50);
+            const [ xt1, yt1 ] = getCoordinates(portion * (i + 0.5), 145);
 
             return (
               <Slot
@@ -106,14 +107,15 @@ export default class RouletteWheel extends React.PureComponent {
                 textStart={[ xt0, yt0 ]}
                 textEnd={[ xt1, yt1 ]}
                 arc={arc}
+                radius={radius}
                 label={l.text}
                 color={l.color}
               />
             );
           })}
         </g>
-        <circle cx="0" cy="0" r="0.25" fill="white"/>
-        {this.renderMarker()}
+        <circle cx="0" cy="0" r="45" fill="white"/>
+        {this.renderMarker(radius)}
       </svg>
     );
   }
@@ -162,18 +164,17 @@ function Slot(props) {
 
   const path = [
     `M ${x0} ${y0}`, // move
-    `A 1 1 0 ${props.arc} 1 ${x1} ${y1}`, // arc
+    `A ${props.radius} ${props.radius} 0 ${props.arc} 1 ${x1} ${y1}`, // arc
     'L 0 0', // line
   ];
   return (
     <g>
       <path d={path.join(' ')} fill={props.color}/>
-      {/* <path
+      <path
         fill="red"
         d={`M ${xt1} ${yt1} L ${xt0} ${yt0}`}
-        stroke="red"
-        strokeWidth="0.01"
-      /> */}
+        // stroke="red"
+      />
       <def>
         <path id={slotId} d={`M ${xt1} ${yt1} L ${xt0} ${yt0}`}/>
       </def>
@@ -192,6 +193,7 @@ Slot.propTypes = {
   textStart: PropTypes.arrayOf(PropTypes.number).isRequired,
   textEnd: PropTypes.arrayOf(PropTypes.number).isRequired,
   arc: PropTypes.number.isRequired,
+  radius: PropTypes.number.isRequired,
   color: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
 };
