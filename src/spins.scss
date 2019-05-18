@@ -68,9 +68,13 @@ html, body {
 
 .roulette-wheel {
 	height: auto;
-	width: 90%;
+	width: 80%;
 	margin: 0 auto;
   display: block;
+
+  @media (max-width: 768px) {
+    width: 95%;
+  }
 
   &-container {
     display: flex;
@@ -81,11 +85,11 @@ html, body {
   }
 
   &-content {
-  	width: 60%;
+    width: 60%;
     position: relative;
 
     @media (max-width: 768px) {
-  		width: 75%;
+  		width: 80%;
     }
   }
 
@@ -97,7 +101,7 @@ html, body {
   }
 
   &-label {
-    font-size: 0.09px;
+    font-size: 0.1px;
     letter-spacing: 0.004px;
     font-weight: bolder;
     fill: white;
@@ -105,16 +109,26 @@ html, body {
     stroke: black;
     stroke-width: 0.01px;
     text-transform: uppercase;
-    // dominant-baseline: central;
+    text-anchor: middle;
   }
 
   &-result {
-    font-size: 0.12px;
-    text-anchor: middle;
-    fill: $dark-purple;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5em;
+    height: 2em;
+    margin-bottom: 0.9em;
+    font-size: 1.5em;
+    color: $dark-purple;
     letter-spacing: 0.004px;
     text-transform: uppercase;
     font-weight: bolder;
+
+    &-text {
+      padding: 0 0.5em 0.3em 0.5em;
+      border-bottom: 3px solid $light-purple;
+    }
   }
 
   &-marker {
@@ -124,7 +138,7 @@ html, body {
   &-controls {
     display: flex;
     justify-content: center;
-    margin-top: 2.3em;
+    margin-top: 2em;
   }
 }
 

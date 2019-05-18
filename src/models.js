@@ -28,10 +28,17 @@ const colors = [
  * was spun.
  */
 export class Wheel {
+  /**
+   * The wheel constructor.
+   *
+   * @param {string} name The wheel's name
+   * @param {string[]} labels The wheel's labels
+   * @param {{ timestamp: number, index: number }[]} history The wheel's history
+   */
   constructor(name, labels = [], history = []) {
     this.id = v4();
     this.name = name;
-    this.labels = this.mapToColors(labels);
+    this.labels = this.generateLabels(labels);
     this.history = history;
   }
 
@@ -44,27 +51,27 @@ export class Wheel {
     const _wheel = new Wheel();
     _wheel.id = id;
     _wheel.name = name;
-    _wheel.labels = labels;
+    _wheel.labels = labels.map(l => Label.from(l));
     _wheel.history = history;
     return _wheel;
   }
 
   /**
-   * Retrieves the label at the given index.
+   * Retrieves the label's text at the given index.
    *
    * @param {Number} index The label index
-   * @return {String} The selected label
+   * @return {string} The selected label
    */
   get(index) {
-    const [ label, _ ] = this.labels[index];
-    return label;
+    const label = this.labels[index];
+    return label.text;
   }
 
-  mapToColors(labels) {
+  generateLabels(labels) {
     const shuffled = shuffle(colors);
     return labels.map((s, i) => {
       const color = shuffled[i % shuffled.length];
-      return [ s, color ];
+      return new Label(s, color);
     });
   }
 
@@ -78,5 +85,35 @@ export class Wheel {
       timestamp: Date.now(),
       index : index,
     });
+  }
+}
+
+/**
+ * A simple container for a label and it's attributes.
+ */
+class Label {
+  /**
+   * The label constructor.
+   *
+   * @param {string} text The label text
+   * @param {string} color The label's color hex code
+   */
+  constructor(text, color) {
+    this.id = v4();
+    this.text = text;
+    this.color = color;
+  }
+
+  /**
+   * A static constructor to build a label object from the given json object.
+   *
+   * @param {Object} obj The json data
+   */
+  static from({ id, text, color }) {
+    const _label = new Label();
+    _label.id = id;
+    _label.text = text;
+    _label.color = color;
+    return _label;
   }
 }

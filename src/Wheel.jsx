@@ -74,21 +74,6 @@ export default class RouletteWheel extends React.PureComponent {
     );
   }
 
-  renderCircle() {
-    const { wheel } = this.props;
-    const { result } = this.state;
-    return (
-      <g>
-        <circle cx="0" cy="0" r="0.35" fill="white"/>
-        {result !== null &&
-          <text x="0" y="0.03" className="roulette-wheel-result">
-            {wheel.get(result)}
-          </text>
-        }
-      </g>
-    );
-  }
-
   renderWheel() {
     const { wheel } = this.props;
     const { rotation, result } = this.state;
@@ -106,37 +91,45 @@ export default class RouletteWheel extends React.PureComponent {
           style={{ transform: `rotate(${rotation}deg)` }}
           onTransitionEnd={this.handleSpinEnd}
         >
-          {wheel.labels.map(([ label, color ], i) => {
+          {wheel.labels.map((l, i) => {
             const [ x0, y0 ] = getCoordinates(portion * i);
             const [ x1, y1 ] = getCoordinates(portion * (i + 1));
 
-            const [ xt0, yt0 ] = getCoordinates(portion * (i + 0.425), 0.4);
-            const [ xt1, yt1 ] = getCoordinates(portion * (i + 0.425), 0.9);
+            const [ xt0, yt0 ] = getCoordinates(portion * (i + 0.425), 0.30);
+            const [ xt1, yt1 ] = getCoordinates(portion * (i + 0.425), 0.95);
 
             return (
               <Slot
-                key={label}
+                key={l.id}
                 start={[ x0, y0 ]}
                 end={[ x1, y1 ]}
                 textStart={[ xt0, yt0 ]}
                 textEnd={[ xt1, yt1 ]}
                 arc={arc}
-                label={label}
-                color={color}
+                label={l.text}
+                color={l.color}
               />
             );
           })}
         </g>
-        {this.renderCircle()}
+        <circle cx="0" cy="0" r="0.25" fill="white"/>
         {this.renderMarker()}
       </svg>
     );
   }
 
   render() {
+    const { wheel } = this.props;
+    const { result } = this.state;
     return (
       <div className="roulette-wheel-container">
         <div className="roulette-wheel-content">
+          <div className="roulette-wheel-result">
+            {result != null &&
+                <span className="roulette-wheel-result-text">
+                  {wheel.get(result)}
+                </span>}
+          </div>
           {this.renderWheel()}
           <div className="roulette-wheel-controls">
             <button className="btn" onClick={this.handleSpin}>
@@ -175,12 +168,17 @@ function Slot(props) {
   return (
     <g>
       <path d={path.join(' ')} fill={props.color}/>
-      {/* <path fill="red" d={`M ${xt1} ${yt1} L ${xt0} ${yt0}`} stroke="red" strokeWidth="0.01" /> */}
+      {/* <path
+        fill="red"
+        d={`M ${xt1} ${yt1} L ${xt0} ${yt0}`}
+        stroke="red"
+        strokeWidth="0.01"
+      /> */}
       <def>
         <path id={slotId} d={`M ${xt1} ${yt1} L ${xt0} ${yt0}`}/>
       </def>
-      <text className="roulette-wheel-label" lengthAdjust="spacing">
-        <textPath href={`#${slotId}`}>
+      <text className="roulette-wheel-label">
+        <textPath href={`#${slotId}`} startOffset="50%">
           {props.label}
         </textPath>
       </text>
