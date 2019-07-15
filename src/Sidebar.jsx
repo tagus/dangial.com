@@ -59,10 +59,19 @@ export default class Sidebar extends React.Component {
   }
 
   render() {
-    const { wheels, onWheelAdd } = this.props;
+    const { wheels, onWheelAdd, onSidebarClose } = this.props;
     return (
       <div>
-        <h1>dangial.com</h1>
+        <div className="header-wrapper">
+          <h1>dangial.com</h1>
+          <button className="sidebar-close">
+            <i
+              style={{fontSize: "20px"}}
+              className="far fa-window-close"
+              onClick={onSidebarClose}
+            />
+          </button>
+        </div>
         {wheels.length > 0 ? this.renderWheels() : this.renderEmpty()}
         <div className="wheels-add">
           <i className="far fa-plus-square" onClick={onWheelAdd}></i>
