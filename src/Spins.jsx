@@ -209,7 +209,7 @@ export default class Spins extends React.Component {
       <div className="spins-container">
         <div className={`spins-sidebar ${classNames}`}>
           <MediaQuery {...breakpoints.mobile}>
-            {this.state.  isSidebarOpen ? this.renderSidebar() : null}
+            {this.state.isSidebarOpen && this.renderSidebar()}
           </MediaQuery>
           <MediaQuery {...breakpoints.desktop}>
             {this.renderSidebar()}
