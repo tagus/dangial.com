@@ -4,8 +4,14 @@ import { Wheel } from './models.js';
 import RouletteWheel from './Wheel.jsx';
 import WheelForm from './WheelForm.jsx';
 import Cookie from 'js-cookie';
+import MediaQuery from 'react-responsive'
 
 const STORAGE_KEY = 'wheels';
+
+const breakpoints = {
+  mobile: {maxDeviceWidth: 767},
+  desktop: {minDeviceWidth: 768},
+}
 
 /**
  * Main container for for the spins application.
@@ -17,6 +23,7 @@ export default class Spins extends React.Component {
     this.state = {
       wheels: _wheels,
       selected: _wheels.length > 0 ? 0 : -1,
+      isSidebarOpen: false,
       isAddingWheel: false,
     };
     this.handleWheelSelect = this.handleWheelSelect.bind(this);
@@ -25,6 +32,7 @@ export default class Spins extends React.Component {
     this.toggleAddingWheel = this.toggleAddingWheel.bind(this);
     this.handleWheelSave = this.handleWheelSave.bind(this);
     this.handleWheelAdd = this.handleWheelAdd.bind(this);
+    this.handleSidebarClose = this.handleSidebarClose.bind(this);
   }
 
   componentDidMount() {
@@ -128,12 +136,26 @@ export default class Spins extends React.Component {
   }
 
   /**
+   * Handles closing the sidebar
+   *
+   * @param {Wheel} labels The new wheel
+   */
+  handleSidebarClose() {
+    this.setState(prev => {
+      return {
+        isSidebarOpen: false,
+      };
+    });
+  }
+
+  /**
    * Renders the new wheel form and deselects the selected wheel.
    */
   handleWheelAdd() {
     this.setState({
       isAddingWheel: true,
       selected: -1,
+      isSidebarOpen: false,
     });
   }
 
@@ -164,20 +186,41 @@ export default class Spins extends React.Component {
     );
   }
 
+  renderSidebar() {
+    const { wheels, selected } = this.state;
+
+    return (
+      <Sidebar
+        wheels={wheels}
+        onWheelSelect={this.handleWheelSelect}
+        onWheelAdd={this.handleWheelAdd}
+        onWheelDelete={this.handleWheelDelete}
+        onSidebarClose={this.handleSidebarClose}
+        selected={selected}
+      />
+    );
+  }
+
   render() {
-    const { wheels, selected, isAddingWheel } = this.state;
+    const { isAddingWheel, isSidebarOpen, selected } = this.state;
+    const classNames = [isSidebarOpen ? 'is-open' : '', (selected !== -1 && !isAddingWheel) ? 'is-transparent' : ''].join(' ');
+
     return (
       <div className="spins-container">
-        <div className="spins-sidebar">
-          <Sidebar
-            wheels={wheels}
-            onWheelSelect={this.handleWheelSelect}
-            onWheelAdd={this.handleWheelAdd}
-            onWheelDelete={this.handleWheelDelete}
-            selected={selected}
-          />
+        <div className={`spins-sidebar ${classNames}`}>
+          <MediaQuery {...breakpoints.mobile}>
+            {this.state.isSidebarOpen && this.renderSidebar()}
+          </MediaQuery>
+          <MediaQuery {...breakpoints.desktop}>
+            {this.renderSidebar()}
+          </MediaQuery>
         </div>
         <div className="spins-wheel">
+          <button
+            onClick={() => this.setState(prev => ({ isSidebarOpen: !prev.isSidebarOpen }))}
+            className="sidebar-button">
+            Wheels
+          </button>
           {isAddingWheel
             ? <WheelForm onSave={this.handleWheelSave} onCancel={this.toggleAddingWheel}/>
             : this.renderWheel()}
